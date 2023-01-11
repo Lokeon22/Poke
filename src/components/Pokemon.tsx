@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { IState, PokemonDetails } from "../models/IPokState";
 import { pokemonServices } from "../services/pokemonServices";
 
@@ -12,7 +12,7 @@ interface DataProps {
   };
 }
 
-export const Pokemon = ({ data }: DataProps) => {
+const PokemonCard = ({ data }: DataProps) => {
   const [details, setDetails] = useState<PokemonDetails>();
   const [state, setState] = useState<IState>({
     loading: false,
@@ -49,3 +49,5 @@ export const Pokemon = ({ data }: DataProps) => {
     </div>
   );
 };
+
+export default React.memo(PokemonCard); // previne re-renders on PokemonCard

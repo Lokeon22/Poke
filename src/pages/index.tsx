@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { PaperPlaneRight } from "phosphor-react";
 
 import pokemonlogo from "../assets/pokemonlogo.png";
-import { Pokemon } from "../components/Pokemon";
+import PokemonCard from "../components/Pokemon";
 
 import { pokemonServices } from "../services/pokemonServices";
 import { IPokemons, IState } from "../models/IPokState";
@@ -41,6 +41,17 @@ export const Home = () => {
 
   const { loading, errorMsg } = state;
 
+  const pokemonFiltered = useMemo(() => {
+    const lowerSearch = search?.toLowerCase() ?? ""; //optimization filter loop
+    return pokemons?.results.filter((val) => {
+      if (search === undefined) {
+        return val;
+      } else if (val.name.toLowerCase().includes(lowerSearch)) {
+        return val;
+      }
+    });
+  }, [pokemons, search]);
+
   return (
     <section className="w-full flex flex-col justify-center items-center px-2 py-2 text-white">
       <div className="flex flex-col justify-center items-center">
@@ -56,17 +67,9 @@ export const Home = () => {
       {loading && <h2>Loading...</h2>}
       {errorMsg && <h2>{errorMsg}</h2>}
       <div className="max-w-[1300px] h-80 flex justify-center items-center gap-4 flex-wrap border-[6px] px-6 py-6 mt-7 overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-[#414baa] scrollbar-thumb-rounded-full">
-        {pokemons?.results
-          .filter((val) => {
-            if (search === undefined) {
-              return val;
-            } else if (val.name.toLowerCase().includes(search?.toLowerCase())) {
-              return val;
-            }
-          })
-          .map((result) => (
-            <Pokemon key={result.name} data={result} />
-          ))}
+        {pokemonFiltered?.map((result) => (
+          <PokemonCard key={result.name} data={result} />
+        ))}
       </div>
       <footer className="flex justify-center items-center gap-4 mt-4">
         {pokemons?.previous ? (
