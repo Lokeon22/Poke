@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { PaperPlaneRight } from "phosphor-react";
 
 import pokemonlogo from "../assets/pokemonlogo.png";
@@ -55,18 +56,29 @@ export const Home = () => {
   return (
     <section className="w-full flex flex-col justify-center items-center px-2 py-2 text-white">
       <div className="flex flex-col justify-center items-center">
-        <img src={pokemonlogo} alt="pokemon logo" className="w-1/2 mb-5" />
-        <label className="mb-2">Pesquisar Pokemon</label>
+        <img src={pokemonlogo} alt="pokemon logo" className="w-1/2 mb-4" />
+        <label htmlFor="inputsearch" className="mb-2">
+          Pesquisar Pokemon
+        </label>
         <input
+          id="inputsearch"
           type="text"
           placeholder="EX: Charizard"
           onChange={(e) => setSearch(e.target.value)}
-          className="px-2 py-2 w-[300px] text-black rounded outline-none"
+          className="px-2 py-2 w-[300px] text-black rounded outline-none mb-2"
         />
+      </div>
+      <div className="xl:w-[67%] w-full flex justify-between">
+        <Link to="/favorites">
+          <p className="text-lg">PokeFavorites</p>
+        </Link>
+        <Link to="/shop">
+          <p className="text-lg">PokeShop</p>
+        </Link>
       </div>
       {loading && <h2>Loading...</h2>}
       {errorMsg && <h2>{errorMsg}</h2>}
-      <div className="max-w-[1300px] h-80 flex justify-center items-center gap-4 flex-wrap border-[6px] px-6 py-6 mt-7 overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-[#414baa] scrollbar-thumb-rounded-full">
+      <div className="max-w-[1300px] h-80 flex justify-center items-center gap-4 flex-wrap border-[6px] px-6 py-6 mt-2 overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-[#414baa] scrollbar-thumb-rounded-full">
         {pokemonFiltered?.map((result) => (
           <PokemonCard key={result.name} data={result} />
         ))}

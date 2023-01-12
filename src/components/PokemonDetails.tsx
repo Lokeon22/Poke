@@ -9,10 +9,11 @@ interface DataProps {
 export const PokemonDetails = ({ data }: DataProps) => {
   return (
     <section className="flex flex-col justify-center items-center mt-8 sm:py-0 sm:px-0 py-2 px-2">
-      <img src={pokemonlogo2} className="w-[550px]" />
+      <img src={pokemonlogo2} className="w-[550px]" alt="Logo Pokemon" />
       <div className="flex sm:flex-row flex-col justify-center items-center sm:gap-12 gap-6">
         <img
           src={data?.sprites.other.home.front_default}
+          alt={data?.name}
           className="sm:w-[300px] w-[290px] hover:rotate-3 hover:transition-all hover:ease-in"
         />
         <footer className="flex flex-col items-center text-xl text-white gap-1 sm:mb-0 mb-4">

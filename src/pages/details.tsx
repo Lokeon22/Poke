@@ -14,7 +14,7 @@ export const Details = () => {
 
   useEffect(() => {
     pokemonServices
-      .pokemonDetail(id)
+      .getPokemonInfos(id)
       .then((res) => setPokemonInfo(res.data))
       .catch((err) => setErroMsg(err.message));
   }, []);

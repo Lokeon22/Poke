@@ -5,6 +5,7 @@ import { pokemonServices } from "../services/pokemonServices";
 
 import circle from "../assets/circle.svg";
 import heart from "../assets/heart.svg";
+import redheart from "../assets/redheart.svg";
 
 interface DataProps {
   data: {
@@ -19,6 +20,7 @@ const PokemonCard = ({ data }: DataProps) => {
     loading: false,
     errorMsg: "",
   });
+  const [hearts, setHearts] = useState<boolean>(false);
 
   useEffect(() => {
     pokemonServices
@@ -32,9 +34,10 @@ const PokemonCard = ({ data }: DataProps) => {
       {state.errorMsg && <h2>{state.errorMsg}</h2>}
       <div className="relative z-10 mb-2">
         <img
-          src={heart}
+          src={hearts ? redheart : heart}
           alt="heart"
           className="w-8 h-8 absolute left-[95%] -top-2 cursor-pointer"
+          onClick={() => setHearts(!hearts)}
         />
         <Link to={`/details/${details?.id}`}>
           <img
