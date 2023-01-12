@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { IState, PokemonDetails } from "../models/IPokState";
 import { pokemonServices } from "../services/pokemonServices";
 
@@ -35,11 +36,13 @@ const PokemonCard = ({ data }: DataProps) => {
           alt="heart"
           className="w-8 h-8 absolute left-[95%] -top-2 cursor-pointer"
         />
-        <img
-          src={details?.sprites.other.home.front_default}
-          alt={details?.name}
-          className="max-w-[150px] cursor-pointer hover:scale-105 hover:transition-all hover:ease-in"
-        />
+        <Link to={`/details/${details?.id}`}>
+          <img
+            src={details?.sprites.other.home.front_default}
+            alt={details?.name}
+            className="max-w-[150px] cursor-pointer hover:scale-105 hover:transition-all hover:ease-in"
+          />
+        </Link>
         <img src={circle} className="w-28 h-28 absolute -z-10 left-5 top-10" />
       </div>
       <footer className="flex flex-col justify-center items-center text-white">

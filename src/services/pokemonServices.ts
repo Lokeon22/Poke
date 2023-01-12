@@ -17,4 +17,10 @@ export class pokemonServices {
     let pokemonsURL: string = `${data}`;
     return axios.get(pokemonsURL);
   }
+
+  public static pokemonDetail(data?: string) {
+    //page details
+    let pokemonURL: string = `${this.URL}/${data}`;
+    return axios.get(pokemonURL);
+  }
 }
