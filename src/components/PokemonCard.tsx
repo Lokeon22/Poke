@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { IState, PokemonDetails } from "../models/IPokState";
+import { IState } from "../models/IPokState";
 import { pokemonServices } from "../services/pokemonServices";
+import { IPokeInfo } from "../models/IPokeInfos";
 
 import circle from "../assets/circle.svg";
-import heart from "../assets/heart.svg";
-import redheart from "../assets/redheart.svg";
+import { HeartFavorites } from "./HeartFavorites";
 
 interface DataProps {
   data: {
@@ -15,12 +15,11 @@ interface DataProps {
 }
 
 const PokemonCard = ({ data }: DataProps) => {
-  const [details, setDetails] = useState<PokemonDetails>();
+  const [details, setDetails] = useState<IPokeInfo>();
   const [state, setState] = useState<IState>({
     loading: false,
     errorMsg: "",
   });
-  const [hearts, setHearts] = useState<boolean>(false);
 
   useEffect(() => {
     pokemonServices
@@ -33,12 +32,7 @@ const PokemonCard = ({ data }: DataProps) => {
     <div className="flex flex-col justify-center items-center w-[230px] h-[260px] px-4 py-4 bg-blue-500 rounded-md">
       {state.errorMsg && <h2>{state.errorMsg}</h2>}
       <div className="relative z-10 mb-2">
-        <img
-          src={hearts ? redheart : heart}
-          alt="heart"
-          className="w-8 h-8 absolute left-[95%] -top-2 cursor-pointer"
-          onClick={() => setHearts(!hearts)}
-        />
+        <HeartFavorites details={details} />
         <Link to={`/details/${details?.id}`}>
           <img
             src={details?.sprites.other.home.front_default}

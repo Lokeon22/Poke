@@ -2,11 +2,11 @@ import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { PaperPlaneRight } from "phosphor-react";
 
-import pokemonlogo from "../assets/pokemonlogo.png";
-import PokemonCard from "../components/Pokemon";
-
 import { pokemonServices } from "../services/pokemonServices";
 import { IPokemons, IState } from "../models/IPokState";
+
+import pokemonlogo from "../assets/pokemonlogo.png";
+import PokemonCard from "../components/PokemonCard";
 
 export const Home = () => {
   const [pokemons, setPokemons] = useState<IPokemons>();
@@ -15,7 +15,7 @@ export const Home = () => {
     errorMsg: "",
   });
   const [page, setPage] = useState<number>(1);
-  const [search, setSearch] = useState<string>();
+  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
     setState({ ...state, loading: true });
@@ -43,7 +43,7 @@ export const Home = () => {
   const { loading, errorMsg } = state;
 
   const pokemonFiltered = useMemo(() => {
-    const lowerSearch = search?.toLowerCase() ?? ""; //optimization filter loop
+    const lowerSearch = search.toLowerCase(); //optimization filter loop
     return pokemons?.results.filter((val) => {
       if (search === undefined) {
         return val;

@@ -10,21 +10,6 @@ interface Results {
   url: string;
 }
 
-export interface PokemonDetails {
-  id: number;
-  name: string;
-  base_experience: number;
-  sprites: Other;
-}
-
-interface Other {
-  other: {
-    home: {
-      front_default: string;
-    };
-  };
-}
-
 export interface IState {
   loading: boolean;
   errorMsg: string;
