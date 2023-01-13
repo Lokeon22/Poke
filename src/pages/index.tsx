@@ -68,12 +68,9 @@ export const Home = () => {
           className="px-2 py-2 w-[300px] text-black rounded outline-none mb-2"
         />
       </div>
-      <div className="xl:w-[67%] w-full flex justify-between">
+      <div className="xl:w-[67%] w-full flex">
         <Link to="/favorites">
           <p className="text-lg">PokeFavorites</p>
-        </Link>
-        <Link to="/shop">
-          <p className="text-lg">PokeShop</p>
         </Link>
       </div>
       {loading && <h2>Loading...</h2>}

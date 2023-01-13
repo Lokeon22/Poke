@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { usePoke } from "../context/pokeContext";
 
 import { ArrowLeft } from "phosphor-react";
@@ -43,6 +44,11 @@ export const Favorites = () => {
                     className="max-w-[250px] sm:max-w-[300px]"
                   />
                   <h2 className="text-2xl mt-2 capitalize">{fav.name}</h2>
+                  <Link to={`/details/${fav.id}`}>
+                    <span className="text-sm hover:text-slate-300 hover:transition-all hover:ease-in">
+                      Ver detalhes
+                    </span>
+                  </Link>
                 </div>
               ))}
             </div>
