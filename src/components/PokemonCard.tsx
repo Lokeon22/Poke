@@ -29,7 +29,7 @@ const PokemonCard = ({ data }: DataProps) => {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center w-[230px] h-[260px] px-4 py-4 bg-blue-500 rounded-md">
+    <div className="flex flex-col justify-center items-center w-[230px] h-[260px] px-4 py-4 bg-blue-600 rounded-md">
       {state.errorMsg && <h2>{state.errorMsg}</h2>}
       <div className="relative z-10 mb-2">
         <HeartFavorites details={details} />

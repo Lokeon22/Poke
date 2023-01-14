@@ -22,8 +22,10 @@ export const Favorites = () => {
   return (
     <div className="w-full h-full text-white">
       <Header />
-      <h2 className="text-start px-5 mt-10 mb-10 text-2xl">Poke Favorites</h2>
-      <section className="flex justify-center items-center gap-5 mx-auto my-0 max-w-[400px]">
+      <h2 className="text-start px-5 mt-10 mb-10 text-2xl max-[340px]:mb-5">
+        Poke Favorites
+      </h2>
+      <section className="flex justify-center items-center gap-5 mx-auto my-0 max-w-[400px] sm:max-w-[450px]">
         {favorites.length > 1 ? (
           <>
             <button className="md:flex hidden cursor-pointer">
@@ -41,9 +43,11 @@ export const Favorites = () => {
                 <div key={fav.id} className="w-full flex flex-col items-center">
                   <img
                     src={fav.sprites.other.home.front_default}
-                    className="max-w-[250px] sm:max-w-[300px]"
+                    className="max-w-[280px] sm:max-w-[400px]"
                   />
-                  <h2 className="text-2xl mt-2 capitalize">{fav.name}</h2>
+                  <h2 className="text-3xl sm:text-4xl mt-2 capitalize">
+                    {fav.name}
+                  </h2>
                   <Link to={`/details/${fav.id}`}>
                     <span className="text-sm hover:text-slate-300 hover:transition-all hover:ease-in">
                       Ver detalhes
@@ -54,7 +58,7 @@ export const Favorites = () => {
             </div>
           </>
         ) : (
-          <h2>Nenhum Pokemon Favorito</h2>
+          <h2 className="sm:text-2xl text-xl">Nenhum Pokemon Favorito</h2>
         )}
         {favorites.length > 1 ? (
           <>
