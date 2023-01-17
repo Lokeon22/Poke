@@ -28,7 +28,7 @@ export const Favorites = () => {
       <section className="flex justify-center items-center gap-5 mx-auto my-0 max-w-[400px] sm:max-w-[450px]">
         {favorites.length > 1 ? (
           <>
-            <button className="md:flex hidden cursor-pointer">
+            <button className="md:flex hidden cursor-pointer hover:transition-all hover:ease-in hover:text-blue-400">
               <ArrowLeft size={32} onClick={previusSlide} />
             </button>
           </>
@@ -63,7 +63,7 @@ export const Favorites = () => {
         {favorites.length > 1 ? (
           <>
             <button
-              className="md:flex hidden cursor-pointer"
+              className="md:flex hidden cursor-pointer hover:transition-all hover:ease-in hover:text-blue-400"
               onClick={nextSlide}
             >
               <ArrowLeft size={32} className="rotate-180" />
