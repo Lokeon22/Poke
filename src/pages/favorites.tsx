@@ -42,7 +42,7 @@ export const Favorites = () => {
               {favorites.map((fav) => (
                 <div key={fav.id} className="w-full flex flex-col items-center">
                   <img
-                    src={fav.sprites.other.home.front_default}
+                    src={fav.sprites?.other.home.front_default}
                     className="max-w-[280px] sm:max-w-[400px]"
                   />
                   <h2 className="text-3xl sm:text-4xl mt-2 capitalize">
