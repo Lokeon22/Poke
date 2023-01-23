@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { IState } from "../models/IPokState";
-import { pokemonServices } from "../services/pokemonServices";
+import { pokemonAPI } from "../services/pokemonAPI";
 import { IPokeInfo, initialPokeInfo } from "../models/IPokeInfos";
 
 import circle from "../assets/circle.svg";
@@ -16,21 +15,18 @@ interface DataProps {
 
 const PokemonCard = ({ data }: DataProps) => {
   const [details, setDetails] = useState<IPokeInfo>(initialPokeInfo);
-  const [state, setState] = useState<IState>({
-    loading: false,
-    errorMsg: "",
-  });
+  const [erroMsg, setErroMsg] = useState<string>("");
 
   useEffect(() => {
-    pokemonServices
+    pokemonAPI
       .getPagesOrDetails<IPokeInfo>(data.url)
       .then((res) => setDetails(res))
-      .catch((error: Error) => setState({ ...state, errorMsg: error.message }));
+      .catch((error: Error) => setErroMsg(error.message));
   }, []);
 
   return (
     <div className="flex flex-col justify-center items-center w-[230px] h-[260px] px-4 py-4 bg-blue-600 rounded-md">
-      {state.errorMsg && <h2>{state.errorMsg}</h2>}
+      {erroMsg.length > 0 && <h2>{erroMsg}</h2>}
       <div className="relative z-10 mb-2">
         <HeartFavorites details={details} />
         <Link to={`/details/${details.id}`}>

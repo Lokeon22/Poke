@@ -1,61 +1,27 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { PaperPlaneRight } from "phosphor-react";
 
 import { NotFound } from "../components/NotFound";
-import { pokemonServices } from "../services/pokemonServices";
-import { IPokemons, IState } from "../models/IPokState";
+import { pokemonAPI } from "../services/pokemonAPI";
+import { IPokemons } from "../models/IPokState";
+import { useGetPokemons } from "../hooks/useGetPokemons";
+import { usePages } from "../hooks/usePages";
 
 import pikachulogo from "../assets/pikachulogo.png";
 import pokemonlogo2 from "../assets/pokemonlogo2.svg";
 import PokemonCard from "../components/PokemonCard";
 
 export const Home = () => {
-  const [pokemons, setPokemons] = useState<IPokemons>({
-    count: 0,
-    next: "",
-    previous: "",
-    results: [],
-  });
-  const [state, setState] = useState<IState>({
-    loading: false,
-    errorMsg: "",
-  });
-  const [page, setPage] = useState<number>(1);
+  const { pokemons, setPokemons, erroMsg } = useGetPokemons<IPokemons>(
+    pokemonAPI.getAllPokemons
+  );
+  const { nextPage, previousPage, page } = usePages(setPokemons);
   const [search, setSearch] = useState<string>("");
-
-  useEffect(() => {
-    setState({ ...state, loading: true });
-    pokemonServices
-      .getAllPokemons<IPokemons>()
-      .then((res) => {
-        setPokemons(res);
-        setState({ ...state, loading: false });
-      })
-      .catch((error: Error) =>
-        setState({ ...state, loading: false, errorMsg: error.message })
-      );
-  }, []);
-
-  const nextPage = (data: string) => {
-    pokemonServices
-      .getPagesOrDetails<IPokemons>(data)
-      .then((res) => setPokemons(res));
-    setPage(page + 1);
-  };
-
-  const previousPage = (data: string) => {
-    pokemonServices
-      .getPagesOrDetails<IPokemons>(data)
-      .then((res) => setPokemons(res));
-    setPage(page - 1);
-  };
-
-  const { loading, errorMsg } = state;
 
   const pokemonFiltered = useMemo(() => {
     const lowerSearch = search.toLowerCase(); //optimization filter loop
-    return pokemons.results.filter((val) => {
+    return pokemons?.results.filter((val) => {
       if (search === "") {
         return val;
       } else if (val.name.toLowerCase().includes(lowerSearch)) {
@@ -95,11 +61,10 @@ export const Home = () => {
           </p>
         </Link>
       </div>
-      {loading && <h2 className="text-2xl">Loading...</h2>}
-      {errorMsg && <h2 className="text-2xl">{errorMsg}</h2>}
+      {erroMsg.length > 0 && <h2 className="text-2xl">{erroMsg}</h2>}
       <div className="max-w-[1300px] h-80 flex justify-center items-center gap-4 flex-wrap border-[6px] border-yellow-400 py-4 px-4 sm:px-6 sm:py-6 mt-2 overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-[#444fb1] scrollbar-thumb-rounded-full">
-        {pokemonFiltered.length > 0 ? (
-          pokemonFiltered.map((result) => (
+        {pokemonFiltered && pokemonFiltered.length > 0 ? (
+          pokemonFiltered?.map((result) => (
             <PokemonCard key={result.name} data={result} />
           ))
         ) : (
@@ -107,7 +72,7 @@ export const Home = () => {
         )}
       </div>
       <footer className="flex justify-center items-center gap-4 mt-4 sm:mb-0 mb-3">
-        {pokemons.previous ? (
+        {pokemons?.previous ? (
           <button type="button" onClick={() => previousPage(pokemons.previous)}>
             <PaperPlaneRight
               size={28}
@@ -120,7 +85,7 @@ export const Home = () => {
           </button>
         )}
         <span className="text-lg">{page}</span>
-        {pokemons.next && (
+        {pokemons?.next && (
           <button type="button" onClick={() => nextPage(pokemons.next)}>
             <PaperPlaneRight
               size={28}

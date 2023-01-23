@@ -9,8 +9,3 @@ interface Results {
   name: string;
   url: string;
 }
-
-export interface IState {
-  loading: boolean;
-  errorMsg: string;
-}

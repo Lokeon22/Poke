@@ -1,31 +1,22 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { pokemonServices } from "../services/pokemonServices";
+import { pokemonAPI } from "../services/pokemonAPI";
+import { useGetPokemons } from "../hooks/useGetPokemons";
+import { IPokeInfo } from "../models/IPokeInfos";
 
 import { PokemonDetails } from "../components/PokemonDetails";
 import { Header } from "../components/Header";
 
-import { IPokeInfo, initialPokeInfo } from "../models/IPokeInfos";
-
 export const Details = () => {
-  const [pokemonInfo, setPokemonInfo] = useState<IPokeInfo>(initialPokeInfo);
-  const [erroMsg, setErroMsg] = useState<string>("");
-  const { id } = useParams();
-
-  useEffect(() => {
-    pokemonServices
-      .getPokemonInfos<IPokeInfo>(id)
-      .then((res) => setPokemonInfo(res))
-      .catch((error: Error) => setErroMsg(error.message));
-  }, []);
+  const { pokemons, erroMsg } = useGetPokemons<IPokeInfo>(
+    pokemonAPI.getPokemonInfos
+  );
 
   return (
     <section className="w-full h-full">
       <Header />
-      {erroMsg.length > 0 ? (
+      {erroMsg.length > 0 && (
         <h2 className="text-4xl text-white text-center uppercase">{erroMsg}</h2>
-      ) : null}
-      <PokemonDetails pokemon={pokemonInfo} />
+      )}
+      {pokemons && <PokemonDetails pokemon={pokemons} />}
     </section>
   );
 };
