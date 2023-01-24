@@ -16,7 +16,7 @@ export const Home = () => {
   const { pokemons, setPokemons, erroMsg } = useGetPokemons<IPokemons>(
     pokemonAPI.getAllPokemons
   );
-  const { nextPage, previousPage, page } = usePages(setPokemons);
+  const { pageNavigation, page } = usePages(setPokemons);
   const [search, setSearch] = useState<string>("");
 
   const pokemonFiltered = useMemo(() => {
@@ -73,7 +73,10 @@ export const Home = () => {
       </div>
       <footer className="flex justify-center items-center gap-4 mt-4 sm:mb-0 mb-3">
         {pokemons?.previous ? (
-          <button type="button" onClick={() => previousPage(pokemons.previous)}>
+          <button
+            type="button"
+            onClick={() => pageNavigation(pokemons.previous, page - 1)}
+          >
             <PaperPlaneRight
               size={28}
               className="hover:text-blue-700 hover:transition-all hover:ease-in rotate-180"
@@ -86,7 +89,10 @@ export const Home = () => {
         )}
         <span className="text-lg">{page}</span>
         {pokemons?.next && (
-          <button type="button" onClick={() => nextPage(pokemons.next)}>
+          <button
+            type="button"
+            onClick={() => pageNavigation(pokemons.next, page + 1)}
+          >
             <PaperPlaneRight
               size={28}
               className="hover:text-blue-700 hover:transition-all hover:ease-in"

@@ -7,23 +7,15 @@ export function usePages(
 ) {
   const [page, setPage] = useState<number>(1);
 
-  const nextPage = (data: string) => {
+  const pageNavigation = (data: string, pageNumber: number) => {
     pokemonAPI
       .getPagesOrDetails<IPokemons>(data)
       .then((res) => setPokemons(res));
-    setPage(page + 1);
-  };
-
-  const previousPage = (data: string) => {
-    pokemonAPI
-      .getPagesOrDetails<IPokemons>(data)
-      .then((res) => setPokemons(res));
-    setPage(page - 1);
+    setPage(pageNumber);
   };
 
   return {
-    nextPage,
-    previousPage,
+    pageNavigation,
     page,
   };
 }
